@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { UIProvider } from '@dareheight/ui';
-import { Page404, Home } from './pages';
+import { Page404, Home, Auth } from './pages';
 
 const router = createBrowserRouter([
   {
@@ -10,6 +10,14 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/auth/login',
+    element: <Auth.Login />,
+  },
+  {
+    path: '/auth/register',
+    element: <Auth.Register />,
   },
 ]);
 
