@@ -1,17 +1,47 @@
 
 # Fullstack Monorepo
 
-A **full-stack monorepo** boilerplate that brings together **backend, web, mobile, and shared packages** in one workspace. This setup is designed for scalable development, easy dependency management, and shared code across multiple platforms.
+A **full-stack monorepo** boilerplate combining **NestJS (backend)**, **React + Vite (frontend)**, and **Expo (React Native mobile)** — all managed under a single workspace using **pnpm workspaces**. The repo is designed for **code sharing, scalability, and multi-platform app development**.
+
+---
 
 ## 🚀 Tech Stack
 
-* **Monorepo Management**: [pnpm Workspaces](https://pnpm.io/workspaces)
-* **Backend**: Node.js + Express (TypeScript)
-* **Web**: React (TypeScript)
-* **Mobile**: React Native (Expo)
-* **Shared Packages**: Utilities, UI components, and types
+### 🖥️ Frontend (Website)
+
+* **Framework**: [React](https://react.dev/)
+* **Build Tool**: [Vite](https://vitejs.dev/) for super-fast development and HMR
 * **Language**: TypeScript
-* **Tooling**: ESLint, Prettier, Husky, Commitlint
+* **Styling**: CSS Modules / SCSS
+* **Usage**: User-facing web application (e.g., dashboard, landing page, etc.)
+
+### ⚙️ Backend (API)
+
+* **Framework**: [NestJS](https://nestjs.com/) (Node.js framework for scalable server-side apps)
+* **Language**: TypeScript
+* **Database**: Configurable (e.g., PostgreSQL, MySQL, MongoDB — depending on `.env`)
+* **Features**:
+
+  * Modular architecture
+  * RESTful API endpoints (GraphQL optional)
+  * Authentication & authorization (JWT, Passport strategies)
+  * Configurable service layer for business logic
+
+### 📱 Mobile (App)
+
+* **Framework**: [Expo](https://expo.dev/) (built on React Native)
+* **Language**: TypeScript
+* **Features**:
+
+  * Cross-platform support (iOS, Android)
+  * Shared logic and types with web via `packages/`
+  * Easy publishing via **Expo EAS**
+
+### 📦 Shared Packages
+
+* **Utilities** → Reusable helper functions
+* **Types** → Global TypeScript types/interfaces
+* **UI Components** → Shared React/React Native compatible UI elements
 
 ---
 
@@ -19,13 +49,13 @@ A **full-stack monorepo** boilerplate that brings together **backend, web, mobil
 
 ```
 fullstack-monorepo/
-│── backend/       # API server (Express + TypeScript)
-│── mobile/        # Mobile app (React Native + Expo)
-│── website/       # Web frontend (React)
-│── packages/      # Shared libraries, components, types
+│── backend/       # NestJS API server
+│── website/       # React + Vite frontend
+│── mobile/        # Expo React Native app
+│── packages/      # Shared libraries (utils, types, UI components)
+│── pnpm-workspace.yaml
 │── .gitignore
 │── .prettierrc
-│── pnpm-workspace.yaml
 │── README.md
 ```
 
@@ -46,29 +76,39 @@ cd fullstack-monorepo
 pnpm install
 ```
 
-### 3. Start development servers
+### 3. Run apps
 
-* **Backend**
+#### Backend (NestJS API)
 
-  ```bash
-  pnpm --filter backend dev
-  ```
-* **Website**
+```bash
+pnpm --filter backend start:dev
+```
 
-  ```bash
-  pnpm --filter website dev
-  ```
-* **Mobile** (Expo)
+Default: [http://localhost:4000](http://localhost:4000)
 
-  ```bash
-  pnpm --filter mobile start
-  ```
+#### Frontend (React + Vite)
+
+```bash
+pnpm --filter website dev
+```
+
+Default: [http://localhost:5173](http://localhost:5173)
+
+#### Mobile (Expo)
+
+```bash
+pnpm --filter mobile start
+```
+
+Then scan the QR code in the Expo Go app.
 
 ---
 
 ## ⚙️ Environment Variables
 
-Each app may require its own `.env` file. Example for `backend`:
+Each app requires its own `.env`. Examples:
+
+### Backend (`backend/.env`)
 
 ```
 PORT=4000
@@ -76,35 +116,27 @@ DATABASE_URL=postgres://user:password@localhost:5432/mydb
 JWT_SECRET=supersecret
 ```
 
-Add corresponding `.env` files inside `backend/`, `website/`, and `mobile/` as needed.
+### Website (`website/.env`)
 
----
+```
+VITE_API_URL=http://localhost:4000
+```
 
-## 📦 Shared Packages
+### Mobile (`mobile/.env`)
 
-The `packages/` folder contains reusable code that can be shared across apps:
-
-* **types** → Global TypeScript interfaces
-* **ui** → Shared React components
-* **utils** → Helper functions
-
-Usage inside apps:
-
-```ts
-import { formatDate } from "@fullstack/utils";
+```
+EXPO_PUBLIC_API_URL=http://localhost:4000
 ```
 
 ---
 
 ## 📜 Scripts
 
-Common commands:
-
 ```bash
 pnpm install         # Install dependencies
-pnpm build           # Build all apps & packages
 pnpm dev             # Run all apps in dev mode
-pnpm lint            # Run ESLint checks
+pnpm build           # Build all apps
+pnpm lint            # Run ESLint
 pnpm test            # Run tests
 ```
 
@@ -112,33 +144,26 @@ pnpm test            # Run tests
 
 ## 🚀 Deployment
 
-* **Backend** → Deploy to [Railway](https://railway.app/), [Heroku](https://www.heroku.com/), or Docker
-* **Website** → Deploy to [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/)
-* **Mobile** → Build and publish with [Expo EAS](https://expo.dev/eas)
+* **Backend (NestJS)** → Deploy with Docker, Railway, or Heroku
+* **Frontend (React + Vite)** → Deploy with Vercel or Netlify
+* **Mobile (Expo)** → Build & publish via [EAS](https://docs.expo.dev/eas/)
 
 ---
 
 ## 🤝 Contributing
 
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/my-feature`)
-3. Commit changes (`git commit -m 'feat: add new feature'`)
-4. Push to your branch (`git push origin feature/my-feature`)
-5. Open a Pull Request 🚀
-
 We use:
 
-* **Conventional Commits** for commit messages
-* **ESLint + Prettier** for consistent code style
-* **Husky hooks** to enforce checks before commits
+* **Conventional Commits**
+* **Prettier + ESLint** for consistent formatting
 
----
 
-## 📖 Guidelines
+Steps:
 
-* **Coding style** → Follow ESLint + Prettier rules
-* **Commit messages** → Follow [Conventional Commits](https://www.conventionalcommits.org/)
-* **Branching** → `main` is stable, feature branches should follow `feature/*`
+1. Fork the repo
+2. Create a new branch (`git checkout -b feature/my-feature`)
+3. Commit (`git commit -m 'feat: add new feature'`)
+4. Push & open a PR
 
 ---
 
@@ -148,5 +173,5 @@ MIT License © 2025 [Dare Goodness](https://github.com/daregoodness1997)
 
 ---
 
-👉 With this setup, you can build and scale **web, mobile, and backend** apps all from one monorepo, while sharing code across platforms.
+👉 With this monorepo, you can build **a complete full-stack system** where web, mobile, and backend apps share code, logic, and types in one place.
 
