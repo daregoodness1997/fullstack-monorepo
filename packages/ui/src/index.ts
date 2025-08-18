@@ -1,1 +1,6 @@
-export { default as Button } from './components/Button';
+import { UIProvider } from './providers/UIProvider';
+import Button from './components/Button/Button';
+import Input from './components/Input/Input';
+
+
+export { UIProvider, Button, Input }

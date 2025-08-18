@@ -1,33 +1,15 @@
-import { ChangeEvent, useState } from 'react';
-import { Button } from '@mono/ui';
-import { add } from '@mono/utils';
+import { Button, Input, UIProvider } from '@dareheight/ui';
+import styles from './global.module.scss'
 
 function App() {
-  const [nums, setNums] = useState({
-    a: '',
-    b: '',
-  });
-
-  const handleNumChange =
-    (key: keyof typeof nums) => (e: ChangeEvent<HTMLInputElement>) => {
-      setNums((prevNums) => ({
-        ...prevNums,
-        [key]: e.target.value,
-      }));
-    };
-
   return (
-    <>
-      <input type="text" value={nums.a} onChange={handleNumChange('a')} />
-      <input type="text" value={nums.b} onChange={handleNumChange('b')} />
-      <Button
-        onClick={() => {
-          console.log(add(Number(nums.a), Number(nums.b)));
-        }}
-      >
-        Add
-      </Button>
-    </>
+    <UIProvider>
+     <div className={styles.container}>
+      <Input placeholder="Your name" radius="md" size="lg" />
+      <Input label="Email" placeholder="Your Email" type="email"  radius="md" size="lg"/>
+      <Button onClick={() => alert("Submitted!")} radius="md" size="lg">Submit</Button>
+    </div>
+    </UIProvider>
   );
 }
 
