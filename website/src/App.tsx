@@ -1,14 +1,22 @@
-import { Button, Input, UIProvider } from '@dareheight/ui';
-import styles from './global.module.scss'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { UIProvider } from '@dareheight/ui';
+import { Page404, Home } from './pages';
+
+const router = createBrowserRouter([
+  {
+    path: '*',
+    element: <Page404 />,
+  },
+  {
+    path: '/',
+    element: <Home />,
+  },
+]);
 
 function App() {
   return (
     <UIProvider>
-     <div className={styles.container}>
-      <Input placeholder="Your name" radius="md" size="lg" />
-      <Input label="Email" placeholder="Your Email" type="email"  radius="md" size="lg"/>
-      <Button onClick={() => alert("Submitted!")} radius="md" size="lg">Submit</Button>
-    </div>
+      <RouterProvider router={router} />
     </UIProvider>
   );
 }
